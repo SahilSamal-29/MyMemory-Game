@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                 override fun onCardClicked(position: Int) {
                     updateGameWithFlip(position)
                 }
-
             })
         rvBoard.adapter = adapter
         rvBoard.setHasFixedSize(true)
@@ -57,7 +56,6 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     private fun updateGameWithFlip(position: Int) {
-        memoryGame.flipCard(position)
         //error handling
         if (memoryGame.haveWonGame()) {
             //alert the user of an invalid move
