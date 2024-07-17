@@ -5,5 +5,7 @@
     <color name="color_gray">#E0E0E0</color>
     <color name="secondaryColor">#03DAC6</color>
     <color name="secondaryColorVariant">#018786</color>
+    <color name="color_progress_none">#FF2C1D</color>
+    <color name="color_progress_full">#46FF26</color>
 
 </resources>

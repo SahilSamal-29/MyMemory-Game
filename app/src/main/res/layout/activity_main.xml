@@ -17,18 +17,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp">
+
         <TextView
             android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="100"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:gravity="center"
+            android:layout_marginBottom="10dp"
             android:text="@string/mymemory"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/refresh"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="3dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="@drawable/ic_refresh"
+            />
+        </FrameLayout>
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

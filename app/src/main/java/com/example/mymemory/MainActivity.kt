@@ -1,14 +1,21 @@
 package com.example.mymemory
 
 import android.annotation.SuppressLint
+import android.health.connect.datatypes.units.Length
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.example.mymemory.databinding.ActivityMainBinding
 import com.example.mymemory.models.BoardSize
 import com.example.mymemory.models.MemoryGame
@@ -36,25 +43,16 @@ class MainActivity : AppCompatActivity() {
         }
         tvNumMoves = binding.tvMoves
         tvNumPairs = binding.tvPairs
-
-        memoryGame = MemoryGame(boardSize)
+        tvNumPairs.setTextColor(ContextCompat.getColor(this, R.color.color_progress_none))
 
         rvBoard = binding.rvBoards
-        adapter = MemoryBoardAdapter(this, boardSize, memoryGame.cards,
-            object : MemoryBoardAdapter.CardClickListener {
-                override fun onCardClicked(position: Int) {
-                    updateGameWithFlip(position)
-                }
-            })
-        rvBoard.adapter = adapter
-        rvBoard.setHasFixedSize(true)
-        rvBoard.layoutManager = GridLayoutManager(this, boardSize.getWidth())
-
-        rvBoard.setHasFixedSize(true)
-        binding.rvBoards.layoutManager = GridLayoutManager(this, boardSize.getWidth())
+        setupBoard()
+        binding.refresh.setOnClickListener {
+            setupBoard()
+        }
     }
 
-    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged", "RestrictedApi")
     private fun updateGameWithFlip(position: Int) {
         //error handling
         if (memoryGame.haveWonGame()) {
@@ -69,6 +67,12 @@ class MainActivity : AppCompatActivity() {
         }
         //actually flip over the card
         if (memoryGame.flipCard(position)) {
+            val color = ArgbEvaluator().evaluate(
+                memoryGame.numPairsFound.toFloat() / boardSize.numPairs(),
+                ContextCompat.getColor(this, R.color.color_progress_none),
+                ContextCompat.getColor(this, R.color.color_progress_full)
+            ) as Int
+            tvNumPairs.setTextColor(color)
             tvNumPairs.text = "Pairs: ${memoryGame.numPairsFound} / ${boardSize.numPairs()}"
             if (memoryGame.haveWonGame()) {
                 Snackbar.make(binding.main, "You won! Congratulations.", Snackbar.LENGTH_SHORT).show()
@@ -76,5 +80,21 @@ class MainActivity : AppCompatActivity() {
         }
         tvNumMoves.text = "Moves: ${memoryGame.getNumMoves()}"
         adapter.notifyDataSetChanged()
+    }
+
+    private fun setupBoard() {
+        memoryGame = MemoryGame(boardSize)
+        adapter = MemoryBoardAdapter(this, boardSize, memoryGame.cards,
+            object : MemoryBoardAdapter.CardClickListener {
+                override fun onCardClicked(position: Int) {
+                    updateGameWithFlip(position)
+                }
+            })
+        rvBoard.adapter = adapter
+        rvBoard.setHasFixedSize(true)
+        rvBoard.layoutManager = GridLayoutManager(this, boardSize.getWidth())
+
+        rvBoard.setHasFixedSize(true)
+        binding.rvBoards.layoutManager = GridLayoutManager(this, boardSize.getWidth())
     }
 }
