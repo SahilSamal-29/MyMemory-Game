@@ -46,9 +46,9 @@ class MemoryGame(private val boardSize:BoardSize){
     }
 
     private fun restoreCards() {
-        for(cards in cards){
-            if (!cards.isMatched) {
-                cards.isFaceUp = false
+        for(card in cards){
+            if (!card.isMatched) {
+                card.isFaceUp = false
             }
         }
     }

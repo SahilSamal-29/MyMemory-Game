@@ -24,8 +24,8 @@ class MemoryBoardAdapter(
     RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
 
     companion object{
-        private const val MARGIN_SIZE = 10        //dist between cards
         private const val TAG = "MemoryBoardAdapter"
+        private const val MARGIN_SIZE = 10        //dist between cards
     }
 
     interface CardClickListener{
@@ -35,27 +35,25 @@ class MemoryBoardAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val cardWidth = parent.width / boardSize.getWidth() - (2* MARGIN_SIZE)//top and bottom margin
         val cardHeight = parent.height /boardSize.getHeight() - (2* MARGIN_SIZE)
-        val cardSidelength: Int = min(cardWidth , cardHeight)
+        val cardSidelength = min(cardWidth , cardHeight)
 
         val view = LayoutInflater.from(context).inflate(R.layout.memory_card , parent , false)
 
-        val layoutParams = view.findViewById<CardView>(R.id.memCard).layoutParams as MarginLayoutParams
+        val layoutParams = view.findViewById<CardView>(R.id.memCard).layoutParams as ViewGroup.MarginLayoutParams
         layoutParams.width = cardSidelength
         layoutParams.height = cardSidelength
         layoutParams.setMargins(MARGIN_SIZE, MARGIN_SIZE, MARGIN_SIZE , MARGIN_SIZE) //on all four sides
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return boardSize.numcards
-    }
+    override fun getItemCount() = boardSize.numcards
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val image_button = itemView.findViewById<ImageView>(R.id.imageView)
+        private var image_button = itemView.findViewById<ImageView>(R.id.imageView)
 
         fun bind(position: Int) {
             val memoryCard = cards[position]
