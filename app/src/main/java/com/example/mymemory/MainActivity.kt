@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -47,8 +48,15 @@ class MainActivity : AppCompatActivity() {
 
         rvBoard = binding.rvBoards
         setupBoard()
-        binding.refresh.setOnClickListener {
-            setupBoard()
+        binding.btnRefresh.setOnClickListener {
+            if(!memoryGame.haveWonGame() && memoryGame.getNumMoves() > 0){
+                //alert dialog
+                showAlertDialog("Quit your current game?", null , View.OnClickListener {
+                    setupBoard()
+                })
+                }else{
+                    setupBoard()
+            }
         }
     }
 
@@ -96,5 +104,15 @@ class MainActivity : AppCompatActivity() {
 
         rvBoard.setHasFixedSize(true)
         binding.rvBoards.layoutManager = GridLayoutManager(this, boardSize.getWidth())
+    }
+
+    private fun showAlertDialog(Title: String, view: View?, positiveClickListener: View.OnClickListener) {
+        AlertDialog.Builder(this)
+            .setTitle(Title)
+            .setView(view)
+            .setNegativeButton("CANCEL", null )
+            .setPositiveButton("OK"){_, _ ->
+                positiveClickListener.onClick(null)
+            }.show()
     }
 }

@@ -26,22 +26,40 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="center"
             android:layout_marginBottom="10dp"
             android:text="@string/mymemory"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold" />
-        <ImageButton
-            android:id="@+id/refresh"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="3dp"
-            android:layout_gravity="end|center_vertical"
-            android:background="@drawable/ic_refresh"
-            />
+
+            <Button
+                android:id="@+id/btnRefresh"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="80dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/ic_refresh"
+                />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="end|center_vertical"
+                android:text="Medium" />
+
         </FrameLayout>
 
     </LinearLayout>
@@ -60,6 +78,7 @@
             android:layout_width="150sp"
             android:layout_height="50dp"
             app:cardCornerRadius="15dp"
+            android:backgroundTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/moves_0"
+                android:textColor="#575757"
                 android:textSize="25sp"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
@@ -80,6 +100,7 @@
             android:layout_width="150sp"
             android:layout_height="50dp"
             app:cardCornerRadius="15dp"
+            android:backgroundTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView2"
@@ -102,6 +123,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="-5dp"
         android:overScrollMode="never"
+        android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/clGameInfo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
