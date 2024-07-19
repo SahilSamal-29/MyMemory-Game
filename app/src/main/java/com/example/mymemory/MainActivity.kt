@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import android.graphics.Paint
+import android.widget.RadioGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +20,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.example.mymemory.databinding.ActivityMainBinding
-import com.example.mymemory.models.BoardSize
+import com.example.mymemory.models.BoardSize.*
 import com.example.mymemory.models.MemoryGame
 import com.google.android.material.snackbar.Snackbar
+import com.example.mymemory.models.BoardSize as BoardSize
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: MemoryBoardAdapter
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvNumPairs: TextView
 
     private lateinit var memoryGame: MemoryGame
-    private var boardSize: BoardSize = BoardSize.EASY
+    private var boardSize: BoardSize = EASY
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         rvBoard = binding.rvBoards
         setupBoard()
         binding.btnRefresh.setOnClickListener {
+            binding.btnRefresh.paintFlags = binding.btnRefresh.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             if(!memoryGame.haveWonGame() && memoryGame.getNumMoves() > 0){
                 //alert dialog
                 showAlertDialog("Quit your current game?", null , View.OnClickListener {
@@ -58,6 +62,30 @@ class MainActivity : AppCompatActivity() {
                     setupBoard()
             }
         }
+        binding.tvMode.setOnClickListener {
+            binding.tvMode.paintFlags = binding.tvMode.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            showNewSizeDialog()
+        }
+    }
+
+    private fun showNewSizeDialog() {
+        val boardSizeView = layoutInflater.inflate(R.layout.dialog_board_size, null)
+        val radioGroupSize = boardSizeView.findViewById<RadioGroup>(R.id.radioGroup)
+        when (boardSize) {
+            EASY -> radioGroupSize.check(R.id.rbEasy)
+            MEDIUM -> radioGroupSize.check(R.id.rbMedium)
+            HARD -> radioGroupSize.check(R.id.rbHard)
+        }
+        showAlertDialog("Choose new size", boardSizeView, View.OnClickListener {
+            //set new value for board size
+            boardSize = when (radioGroupSize.checkedRadioButtonId) {
+                R.id.rbEasy -> BoardSize.EASY
+                R.id.rbMedium -> BoardSize.MEDIUM
+                else -> BoardSize.HARD
+
+            }
+            setupBoard()
+        })
     }
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged", "RestrictedApi")
@@ -91,6 +119,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBoard() {
+        when(boardSize){
+            EASY -> {
+                tvNumMoves.text = "Easy: 4 x 2"
+                tvNumPairs.text = "Pairs: 0 / 4"
+            }
+            MEDIUM -> {
+                tvNumMoves.text = "Med: 6 x 3"
+                tvNumPairs.text = "Pairs: 0 / 9"
+            }
+            HARD -> {
+                tvNumMoves.text = "Hard: 6 x 4"
+                tvNumPairs.text = "Pairs: 0 / 12"
+            }
+        }
         memoryGame = MemoryGame(boardSize)
         adapter = MemoryBoardAdapter(this, boardSize, memoryGame.cards,
             object : MemoryBoardAdapter.CardClickListener {

@@ -36,8 +36,8 @@
 
             <Button
                 android:id="@+id/btnRefresh"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="80dp"
                 android:layout_marginBottom="10dp"
@@ -47,10 +47,9 @@
                 />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tvMode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="italic"
                 android:textSize="20sp"
                 android:textColor="@color/white"
                 android:clickable="true"
@@ -58,7 +57,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_gravity="end|center_vertical"
-                android:text="Medium" />
+                android:text="MODE" />
 
         </FrameLayout>
 
