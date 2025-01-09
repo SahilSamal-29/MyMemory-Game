@@ -27,12 +27,6 @@ My Memory is an immersive puzzle game that puts your cognitive skills to the tes
 3. Match pairs to clear the board
 4. Complete levels to unlock achievements
 
-### 🚀 Getting Started
-1. Clone the repository
-2. Open in Android Studio
-3. Sync Gradle files
-4. Run on emulator or physical device
-
 ## 📱 Screenshots
 <img src="https://github.com/user-attachments/assets/95cb438f-c42c-42b0-823c-30be813ea43b" alt="Screenshot" width="250">
 <img src="https://github.com/user-attachments/assets/415d0bb0-ffe3-4b72-9689-5c0183b0d4ee" alt="Screenshot" width="250">
